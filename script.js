@@ -37,7 +37,7 @@ const $ = (s) => document.querySelector(s);
 const money = (n) => "$" + n.toLocaleString("es-CO");
 const discount = (p) => p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const imgTag = (src, alt) => `<img loading="lazy" src="${esc(src)}" alt="${esc(alt)}" onerror="this.onerror=null;this.src='${PLACEHOLDER}'">`;
+const imgTag = (src, alt) => `<img loading="lazy" decoding="async" src="${esc(src)}" alt="${esc(alt)}" onerror="this.onerror=null;this.src='${PLACEHOLDER}'">`;
 const byId = (id) => products.find((p) => p.id === Number(id));
 function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("show"), 2200); }
 
@@ -88,7 +88,6 @@ let activeCategory = "";
 function renderCategories() {
   $("#catGrid").innerHTML = categories.map((c) => `<a class="cat" href="#catalogo" data-cat="${c.id}">${imgTag(c.image, c.label)}<span>${esc(c.label)}</span></a>`).join("");
   observeReveals($("#catGrid"));
-  $("#fCat").innerHTML = `<option value="">Todas las categorías</option>` + categories.map((c) => `<option value="${c.id}">${esc(c.label)}</option>`).join("");
   $("#footCats").innerHTML = categories.map((c) => `<a href="#catalogo" data-cat="${c.id}">${esc(c.label)}</a>`).join("");
 }
 
@@ -99,8 +98,6 @@ function toggleCatalogBackButton() {
 document.addEventListener("click", (e) => {
   const a = e.target.closest("[data-cat]"); if (!a) return;
   activeCategory = a.dataset.cat || "";
-  $("#fOffer").checked = false;
-  $("#fCat").value = activeCategory;
   $("#catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
   applyFilters();
 });
@@ -110,10 +107,8 @@ document.addEventListener("click", (e) => {
 // =========================================
 function applyFilters() {
   const q = $("#fSearch").value.trim().toLowerCase();
-  const cat = activeCategory || $("#fCat").value;
-  const pr = $("#fPrice").value, sort = $("#fSort").value, offer = $("#fOffer").checked;
-  let list = products.filter((p) => (!q || (p.name + " " + p.description).toLowerCase().includes(q)) && (!cat || p.category === cat) && (!offer || p.oldPrice));
-  if (pr) { const [min, max] = pr.split("-").map(Number); list = list.filter((p) => p.price >= min && p.price <= max); }
+  const sort = $("#fSort").value;
+  const list = products.filter((p) => (!q || (p.name + " " + p.description).toLowerCase().includes(q)) && (!activeCategory || p.category === activeCategory));
   if (sort === "asc") list.sort((a, b) => a.price - b.price);
   if (sort === "desc") list.sort((a, b) => b.price - a.price);
   if (sort === "new") list.sort((a, b) => (b.badge === "NUEVO") - (a.badge === "NUEVO") || b.id - a.id);
@@ -121,14 +116,11 @@ function applyFilters() {
   renderList($("#catalogGrid"), list);
   toggleCatalogBackButton();
 }
-["fSearch", "fCat", "fPrice", "fSort", "fOffer"].forEach((id) => $("#" + id).addEventListener("input", () => {
-  if (id === "fCat") activeCategory = $("#fCat").value || "";
+["fSearch", "fSort"].forEach((id) => $("#" + id).addEventListener("input", () => {
   applyFilters();
 }));
 $("#catalogBackBtn").addEventListener("click", () => {
   activeCategory = "";
-  $("#fCat").value = "";
-  $("#fOffer").checked = false;
   applyFilters();
 });
 $("#searchBtn").addEventListener("click", () => { location.hash = "#catalogo"; setTimeout(() => $("#fSearch").focus(), 400); });
@@ -285,11 +277,17 @@ $("#menu").addEventListener("click", (e) => { if (e.target.tagName === "A") $("#
 // INICIO
 // =========================================
 renderCategories();
-const initializeProductCarousel = (trackSelector, viewportSelector, previousSelector, nextSelector) => {
+const initializeProductCarousel = (trackSelector, viewportSelector, indicatorsSelector) => {
   const featuredTrack = $(trackSelector);
   const featuredViewport = $(viewportSelector);
   const featuredOriginals = Array.from(featuredTrack.children);
   if (featuredOriginals.length <= 1) return;
+  const indicators = $(indicatorsSelector);
+  indicators.replaceChildren(...featuredOriginals.map(() => {
+    const segment = document.createElement("span");
+    segment.className = "carousel-indicator";
+    return segment;
+  }));
 
   const cloneCard = (card) => {
     const clone = card.cloneNode(true);
@@ -301,15 +299,22 @@ const initializeProductCarousel = (trackSelector, viewportSelector, previousSele
     clone.querySelectorAll("button, input, a").forEach((control) => control.setAttribute("tabindex", "-1"));
     return clone;
   };
-  const lastClone = cloneCard(featuredOriginals[featuredOriginals.length - 1]);
-  const firstClone = cloneCard(featuredOriginals[0]);
-  featuredTrack.prepend(lastClone);
-  featuredTrack.append(firstClone);
+  const cloneSet = () => featuredOriginals.map(cloneCard);
+  const leadingClones = document.createDocumentFragment();
+  const trailingClones = document.createDocumentFragment();
+  for (let set = 0; set < 2; set++) {
+    cloneSet().forEach((clone) => leadingClones.append(clone));
+    cloneSet().forEach((clone) => trailingClones.append(clone));
+  }
+  featuredTrack.prepend(leadingClones);
+  featuredTrack.append(trailingClones);
 
   let featuredIndex = 0;
-  let featuredTimer;
   let featuredSnapTimer;
-  let featuredPosition = 1;
+  let featuredPosition = featuredOriginals.length * 2;
+  let dragState = null;
+  let suppressSwipeClick = false;
+  let suppressSwipeClickTimer;
   const allFeaturedCards = () => Array.from(featuredTrack.children);
   const centerFeaturedCard = (position, animate = true) => {
     const cards = allFeaturedCards();
@@ -317,9 +322,14 @@ const initializeProductCarousel = (trackSelector, viewportSelector, previousSele
     if (!activeCard) return;
     featuredPosition = position;
     featuredTrack.style.transition = animate ? "" : "none";
+    const cardTransitions = animate ? null : cards.map((card) => card.style.transition);
+    if (!animate) cards.forEach((card) => { card.style.transition = "none"; });
     const cardOffset = activeCard.getBoundingClientRect().left - featuredTrack.getBoundingClientRect().left;
     const offset = featuredViewport.clientWidth / 2 - cardOffset - activeCard.offsetWidth / 2;
     featuredTrack.style.transform = `translateX(${offset}px)`;
+    Array.from(indicators.children).forEach((indicator, index) => {
+      indicator.classList.toggle("is-active", index === featuredIndex);
+    });
     cards.forEach((card, index) => {
       const isActive = index === position;
       const isClone = card.classList.contains("featured-clone");
@@ -335,56 +345,84 @@ const initializeProductCarousel = (trackSelector, viewportSelector, previousSele
     });
     if (!animate) {
       featuredTrack.offsetHeight;
+      cards.forEach((card) => { void card.offsetHeight; });
+      cards.forEach((card, index) => { card.style.transition = cardTransitions[index]; });
       featuredTrack.style.transition = "";
-    }
-  };
-  const showFeatured = (index, position = index + 1) => {
-    featuredIndex = (index + featuredOriginals.length) % featuredOriginals.length;
-    centerFeaturedCard(position);
-  };
-  const moveFeatured = (direction) => {
-    const lastIndex = featuredOriginals.length - 1;
-    const nextIndex = (featuredIndex + direction + featuredOriginals.length) % featuredOriginals.length;
-    const position = direction > 0 && featuredIndex === lastIndex
-      ? featuredOriginals.length + 1
-      : direction < 0 && featuredIndex === 0
-        ? 0
-        : nextIndex + 1;
-    showFeatured(nextIndex, position);
-  };
-  const stopFeaturedTimer = () => window.clearInterval(featuredTimer);
-  const startFeaturedTimer = () => {
-    stopFeaturedTimer();
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      featuredTimer = window.setInterval(() => {
-        if (!document.hidden) moveFeatured(1);
-      }, 5000);
     }
   };
   featuredTrack.addEventListener("transitionend", (event) => {
     if (event.target !== featuredTrack || event.propertyName !== "transform") return;
-    if (featuredPosition === 0) centerFeaturedCard(featuredOriginals.length, false);
-    else if (featuredPosition === featuredOriginals.length + 1) centerFeaturedCard(1, false);
+    const firstOriginalPosition = featuredOriginals.length * 2;
+    const lastOriginalPosition = firstOriginalPosition + featuredOriginals.length - 1;
+    if (featuredPosition < firstOriginalPosition || featuredPosition > lastOriginalPosition) {
+      centerFeaturedCard(firstOriginalPosition + featuredIndex, false);
+    }
   });
-  $(previousSelector).addEventListener("click", () => {
-    moveFeatured(-1);
-    startFeaturedTimer();
+  featuredViewport.addEventListener("pointerdown", (event) => {
+    if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
+    const currentTransform = getComputedStyle(featuredTrack).transform;
+    dragState = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startOffset: currentTransform === "none" ? 0 : new DOMMatrixReadOnly(currentTransform).m41,
+      dragging: false
+    };
+    featuredTrack.style.transition = "none";
+    featuredTrack.style.transform = `translateX(${dragState.startOffset}px)`;
+    featuredTrack.offsetHeight;
+    featuredViewport.setPointerCapture(event.pointerId);
   });
-  $(nextSelector).addEventListener("click", () => {
-    moveFeatured(1);
-    startFeaturedTimer();
+  featuredViewport.addEventListener("pointermove", (event) => {
+    if (!dragState || event.pointerId !== dragState.pointerId) return;
+    const deltaX = event.clientX - dragState.startX;
+    const deltaY = event.clientY - dragState.startY;
+    if (!dragState.dragging && Math.abs(deltaX) > 8 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      dragState.dragging = true;
+      featuredTrack.style.transition = "none";
+    }
+    if (!dragState.dragging) return;
+    event.preventDefault();
+    featuredTrack.style.transform = `translateX(${dragState.startOffset + deltaX}px)`;
   });
+  const finishFeaturedDrag = (event, cancelled = false) => {
+    if (!dragState || event.pointerId !== dragState.pointerId) return;
+    const { dragging } = dragState;
+    dragState = null;
+    if (dragging) {
+      suppressSwipeClick = !cancelled;
+      window.clearTimeout(suppressSwipeClickTimer);
+      suppressSwipeClickTimer = window.setTimeout(() => { suppressSwipeClick = false; }, 400);
+      const viewportCenter = featuredViewport.getBoundingClientRect().left + featuredViewport.clientWidth / 2;
+      const cards = allFeaturedCards();
+      const nearestPosition = cards.reduce((nearest, card, index) => {
+        const distance = Math.abs(card.getBoundingClientRect().left + card.offsetWidth / 2 - viewportCenter);
+        return distance < nearest.distance ? { index, distance } : nearest;
+      }, { index: featuredPosition, distance: Infinity }).index;
+      const firstOriginalPosition = featuredOriginals.length * 2;
+      featuredIndex = (nearestPosition - firstOriginalPosition + featuredOriginals.length) % featuredOriginals.length;
+      centerFeaturedCard(nearestPosition);
+    } else centerFeaturedCard(featuredPosition);
+  };
+  featuredViewport.addEventListener("pointerup", (event) => finishFeaturedDrag(event));
+  featuredViewport.addEventListener("pointercancel", (event) => finishFeaturedDrag(event, true));
+  featuredViewport.addEventListener("click", (event) => {
+    if (!suppressSwipeClick) return;
+    suppressSwipeClick = false;
+    window.clearTimeout(suppressSwipeClickTimer);
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
   window.addEventListener("resize", () => {
     window.clearTimeout(featuredSnapTimer);
     featuredSnapTimer = window.setTimeout(() => centerFeaturedCard(featuredPosition, false), 120);
   });
-  centerFeaturedCard(1, false);
-  startFeaturedTimer();
+  centerFeaturedCard(featuredPosition, false);
 };
 renderList($("#featuredGrid"), products.filter((p) => p.badge === "DESTACADO" || p.badge === "NUEVO").slice(0, 4));
 renderList($("#offersGrid"), products.filter((p) => p.oldPrice));
-initializeProductCarousel("#featuredGrid", "#featuredViewport", "[data-featured-prev]", "[data-featured-next]");
-initializeProductCarousel("#offersGrid", "#offersViewport", "[data-offers-prev]", "[data-offers-next]");
+initializeProductCarousel("#featuredGrid", "#featuredViewport", "#featuredIndicators");
+initializeProductCarousel("#offersGrid", "#offersViewport", "#offersIndicators");
 applyFilters();
 observeReveals();
 renderCart();

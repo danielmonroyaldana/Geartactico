@@ -8,7 +8,7 @@
 <meta name="keywords" content="mochilas tácticas, bolsos, riñoneras, canguros, equipamiento táctico, outdoor, Colombia">
 <!-- Analytics / Search Console / Meta Pixel: pegar aquí más adelante -->
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script src="script.js" defer></script>
 </head>
@@ -115,9 +115,9 @@
     <div class="product-carousel-viewport" id="featuredViewport" aria-roledescription="carrusel" aria-label="Productos destacados">
       <div class="grid product-carousel-track" id="featuredGrid"></div>
     </div>
-    <div class="featured-controls" aria-label="Controles de productos destacados">
-      <button class="featured-arrow" type="button" data-featured-prev aria-label="Producto destacado anterior">‹</button>
-      <button class="featured-arrow" type="button" data-featured-next aria-label="Producto destacado siguiente">›</button>
+    <div class="carousel-hint">
+      <span class="carousel-hint-text">Desliza para explorar</span>
+      <div class="carousel-indicators" id="featuredIndicators" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -128,22 +128,14 @@
 <section class="section" id="catalogo">
   <div class="container">
     <h2>Catálogo</h2>
-    <div class="catalog-toolbar">
-      <button id="catalogBackBtn" class="btn btn-ghost catalog-back" type="button" hidden>← Volver al catálogo</button>
-    </div>
     <!-- FILTROS -->
     <div class="filters">
       <input type="search" id="fSearch" placeholder="Buscar producto…" aria-label="Buscar producto">
-      <select id="fCat" aria-label="Categoría"></select>
-      <select id="fPrice" aria-label="Precio">
-        <option value="">Todos los precios</option><option value="0-60000">Hasta $60.000</option>
-        <option value="60000-150000">$60.000 – $150.000</option><option value="150000-999999999">Más de $150.000</option>
-      </select>
       <select id="fSort" aria-label="Ordenar">
         <option value="">Ordenar</option><option value="asc">Precio: menor a mayor</option>
         <option value="desc">Precio: mayor a menor</option><option value="new">Más nuevos</option>
       </select>
-      <label class="check"><input type="checkbox" id="fOffer"> Solo ofertas</label>
+      <button id="catalogBackBtn" class="btn btn-ghost catalog-back" type="button" hidden>← Volver al catálogo</button>
     </div>
     <p id="resultCount" class="muted" aria-live="polite"></p>
     <div class="grid" id="catalogGrid"></div>
@@ -159,9 +151,9 @@
     <div class="product-carousel-viewport" id="offersViewport" aria-roledescription="carrusel" aria-label="Productos en oferta">
       <div class="grid product-carousel-track" id="offersGrid"></div>
     </div>
-    <div class="featured-controls" aria-label="Controles de ofertas">
-      <button class="featured-arrow" type="button" data-offers-prev aria-label="Oferta anterior">‹</button>
-      <button class="featured-arrow" type="button" data-offers-next aria-label="Oferta siguiente">›</button>
+    <div class="carousel-hint">
+      <span class="carousel-hint-text">Desliza para explorar</span>
+      <div class="carousel-indicators" id="offersIndicators" aria-hidden="true"></div>
     </div>
   </div>
 </section>
