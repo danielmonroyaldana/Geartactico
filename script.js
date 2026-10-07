@@ -6,11 +6,11 @@ const PLACEHOLDER = "assets/images/placeholder.svg";
 
 // Categorías (id = valor usado en products, label = texto visible)
 const categories = [
-  { id: "mochilas", label: "Mochilas", image: "assets/images/cat-mochilas.jpg" },
-  { id: "bolsos", label: "Bolsos", image: "assets/images/cat-bolsos.jpg" },
-  { id: "tulas", label: "Tulas", image: "assets/images/cat-rinoneras.jpg" },
-  { id: "chalecos", label: "Chalecos", image: "assets/images/cat-canguros.jpg" },
-  { id: "accesorios", label: "Accesorios", image: "assets/images/cat-accesorios.jpg" }
+  { id: "mochilas", label: "Mochilas", image: PLACEHOLDER },
+  { id: "bolsos", label: "Bolsos", image: PLACEHOLDER },
+  { id: "tulas", label: "Tulas", image: PLACEHOLDER },
+  { id: "chalecos", label: "Chalecos", image: PLACEHOLDER },
+  { id: "accesorios", label: "Accesorios", image: PLACEHOLDER }
 ];
 
 // =========================================
@@ -18,14 +18,14 @@ const categories = [
 // Campos opcionales: oldPrice, badge, colors, gallery (hasta 3 fotos extra: {src, label}), video (ruta o {src, label}), features, material, dimensions, capacity
 // =========================================
 const products = [
-  { id: 1, name: "Mochila  40L", category: "mochilas", price: 189900, oldPrice: 219900, image: "assets/images/mochila-40l.jpg", badge: "OFERTA", description: "Mochila de alta capacidad para jornadas largas.", colors: ["Negro", "Verde", "Camuflado"], stock: true, material: "Poliéster 600D", dimensions: "50 x 30 x 25 cm", capacity: "40 L", features: ["Sistema modular", "Correas acolchadas", "Múltiples compartimentos"] },
-  { id: 2, name: "Mochila  25L", category: "mochilas", price: 149900, image: "assets/images/mochila-25l.jpg", badge: "NUEVO", description: "Compacta y versátil para el día a día.", colors: ["Negro", "Verde"], stock: true, material: "Nailon", dimensions: "42 x 28 x 20 cm", capacity: "25 L", features: ["Compartimento para laptop", "Panel trasero ventilado"] },
-  { id: 3, name: "Porta aseo Grande", category: "bolsos", price: 129900, image: "assets/images/duffel.jpg", badge: "DESTACADO", description: "Bolso de viaje resistente con asas reforzadas.", colors: ["Negro", "Arena"], stock: true, material: "", dimensions: "60 x 28 x 28 cm", capacity: "45 L", features: ["Correa de hombro", "Cierres resistentes"] },
-  { id: 4, name: "Porta aseo pequeño", category: "bolsos", price: 79900, oldPrice: 99900, image: "assets/images/bandolera.jpg", badge: "OFERTA", description: "Práctico bolso cruzado de uso diario.", colors: ["Negro", "Verde"], stock: true, material: "", dimensions: "30 x 20 x 10 cm", capacity: "6 L", features: ["Correa ajustable", "Bolsillo oculto"] },
-  { id: 5, name: "Tula", category: "tulas", price: 39900, image: "assets/images/rinonera.jpg", badge: "NUEVO", description: "Ligera, con espacio para lo esencial.", colors: ["Negro", "Verde", "Camuflado"], stock: true, material: "non", dimensions: "25 x 14 x 8 cm", capacity: "3 L", features: ["Cinturón ajustable", "Dos compartimentos"] },
-  { id: 6, name: "Porta cantimplora", category: "accesorios", price: 54900, oldPrice: 64900, image: "assets/images/rinonera-pro.jpg", badge: "OFERTA", description: "Más capacidad y sistema modular.", colors: ["Negro", "Arena"], stock: true, material: "Nailon", dimensions: "28 x 16 x 9 cm", capacity: "4 L", features: ["Sistema modular", "Bolsillo frontal"] },
-  { id: 7, name: "Chaleco Portaequipo (Policia)", category: "chalecos", price: 69900, image: "assets/images/canguro.jpg", badge: "DESTACADO", description: "Chaleco modular para llevar equipo..", colors: ["Verde"], stock: true, material: "non", dimensions: "Talla ajustable", capacity: "non", features: ["Correa cruzada", "Cierre oculto"] },
-  { id: 8, name: "Chaleco Portaequipo (Militar)", category: "chalecos", price: 119900, image: "assets/images/chaleco.jpg", description: "Chaleco modular para llevar equipo.", colors: ["Verde"], stock: true, material: "non", dimensions: "Talla ajustable", capacity: "non", features: ["Correa cruzada", "Cierre oculto"] },
+  { id: 1, name: "Mochila  40L", category: "mochilas", price: 189900, oldPrice: 219900, image: PLACEHOLDER, badge: "OFERTA", description: "Mochila de alta capacidad para jornadas largas.", colors: ["Negro", "Verde", "Camuflado"], stock: true, material: "Poliéster 600D", dimensions: "50 x 30 x 25 cm", capacity: "40 L", features: ["Sistema modular", "Correas acolchadas", "Múltiples compartimentos"] },
+  { id: 2, name: "Mochila  25L", category: "mochilas", price: 149900, image: PLACEHOLDER, badge: "NUEVO", description: "Compacta y versátil para el día a día.", colors: ["Negro", "Verde"], stock: true, material: "Nailon", dimensions: "42 x 28 x 20 cm", capacity: "25 L", features: ["Compartimento para laptop", "Panel trasero ventilado"] },
+  { id: 3, name: "Porta aseo Grande", category: "bolsos", price: 129900, image: PLACEHOLDER, badge: "DESTACADO", description: "Bolso de viaje resistente con asas reforzadas.", colors: ["Negro", "Arena"], stock: true, material: "", dimensions: "60 x 28 x 28 cm", capacity: "45 L", features: ["Correa de hombro", "Cierres resistentes"] },
+  { id: 4, name: "Porta aseo pequeño", category: "bolsos", price: 79900, oldPrice: 99900, image: PLACEHOLDER, badge: "OFERTA", description: "Práctico bolso cruzado de uso diario.", colors: ["Negro", "Verde"], stock: true, material: "", dimensions: "30 x 20 x 10 cm", capacity: "6 L", features: ["Correa ajustable", "Bolsillo oculto"] },
+  { id: 5, name: "Tula", category: "tulas", price: 39900, image: PLACEHOLDER, badge: "NUEVO", description: "Ligera, con espacio para lo esencial.", colors: ["Negro", "Verde", "Camuflado"], stock: true, material: "non", dimensions: "25 x 14 x 8 cm", capacity: "3 L", features: ["Cinturón ajustable", "Dos compartimentos"] },
+  { id: 6, name: "Porta cantimplora", category: "accesorios", price: 54900, oldPrice: 64900, image: PLACEHOLDER, badge: "OFERTA", description: "Más capacidad y sistema modular.", colors: ["Negro", "Arena"], stock: true, material: "Nailon", dimensions: "28 x 16 x 9 cm", capacity: "4 L", features: ["Sistema modular", "Bolsillo frontal"] },
+  { id: 7, name: "Chaleco Portaequipo (Policia)", category: "chalecos", price: 69900, image: PLACEHOLDER, badge: "DESTACADO", description: "Chaleco modular para llevar equipo..", colors: ["Verde"], stock: true, material: "non", dimensions: "Talla ajustable", capacity: "non", features: ["Correa cruzada", "Cierre oculto"] },
+  { id: 8, name: "Chaleco Portaequipo (Militar)", category: "chalecos", price: 119900, image: PLACEHOLDER, description: "Chaleco modular para llevar equipo.", colors: ["Verde"], stock: true, material: "non", dimensions: "Talla ajustable", capacity: "non", features: ["Correa cruzada", "Cierre oculto"] },
 
   
 ];
@@ -37,7 +37,7 @@ const $ = (s) => document.querySelector(s);
 const money = (n) => "$" + n.toLocaleString("es-CO");
 const discount = (p) => p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const imgTag = (src, alt) => `<img loading="lazy" decoding="async" src="${esc(src)}" alt="${esc(alt)}" onerror="this.onerror=null;this.src='${PLACEHOLDER}'">`;
+const imgTag = (src, alt) => `<img loading="lazy" decoding="async" draggable="false" src="${esc(src)}" alt="${esc(alt)}" onerror="this.onerror=null;this.src='${PLACEHOLDER}'">`;
 const byId = (id) => products.find((p) => p.id === Number(id));
 function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("show"), 2200); }
 
@@ -92,7 +92,8 @@ function renderCategories() {
 }
 
 function toggleCatalogBackButton() {
-  $("#catalogBackBtn").hidden = !activeCategory;
+  const button = $("#catalogBackBtn");
+  if (button) button.hidden = !activeCategory;
 }
 
 document.addEventListener("click", (e) => {
@@ -106,8 +107,8 @@ document.addEventListener("click", (e) => {
 // FILTROS Y BÚSQUEDA
 // =========================================
 function applyFilters() {
-  const q = $("#fSearch").value.trim().toLowerCase();
-  const sort = $("#fSort").value;
+  const q = ($("#fSearch")?.value || "").trim().toLowerCase();
+  const sort = $("#fSort")?.value || "";
   const list = products.filter((p) => (!q || (p.name + " " + p.description).toLowerCase().includes(q)) && (!activeCategory || p.category === activeCategory));
   if (sort === "asc") list.sort((a, b) => a.price - b.price);
   if (sort === "desc") list.sort((a, b) => b.price - a.price);
@@ -116,10 +117,8 @@ function applyFilters() {
   renderList($("#catalogGrid"), list);
   toggleCatalogBackButton();
 }
-["fSearch", "fSort"].forEach((id) => $("#" + id).addEventListener("input", () => {
-  applyFilters();
-}));
-$("#catalogBackBtn").addEventListener("click", () => {
+["fSearch", "fSort"].forEach((id) => $("#" + id)?.addEventListener("input", applyFilters));
+$("#catalogBackBtn")?.addEventListener("click", () => {
   activeCategory = "";
   applyFilters();
 });
@@ -373,12 +372,14 @@ const initializeProductCarousel = (trackSelector, viewportSelector, indicatorsSe
     featuredTrack.offsetHeight;
     featuredViewport.setPointerCapture(event.pointerId);
   });
+  featuredViewport.addEventListener("dragstart", (event) => event.preventDefault());
   featuredViewport.addEventListener("pointermove", (event) => {
     if (!dragState || event.pointerId !== dragState.pointerId) return;
     const deltaX = event.clientX - dragState.startX;
     const deltaY = event.clientY - dragState.startY;
     if (!dragState.dragging && Math.abs(deltaX) > 8 && Math.abs(deltaX) > Math.abs(deltaY)) {
       dragState.dragging = true;
+      featuredViewport.classList.add("is-dragging");
       featuredTrack.style.transition = "none";
     }
     if (!dragState.dragging) return;
@@ -389,6 +390,7 @@ const initializeProductCarousel = (trackSelector, viewportSelector, indicatorsSe
     if (!dragState || event.pointerId !== dragState.pointerId) return;
     const { dragging } = dragState;
     dragState = null;
+    featuredViewport.classList.remove("is-dragging");
     if (dragging) {
       suppressSwipeClick = !cancelled;
       window.clearTimeout(suppressSwipeClickTimer);

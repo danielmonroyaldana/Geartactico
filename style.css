@@ -141,7 +141,10 @@ h2{font-size:clamp(2rem,5vw,2.8rem);margin-bottom:1.5rem}
 .carousel-indicators{display:flex;justify-content:center;gap:.35rem;width:min(180px,55%);height:4px}
 .carousel-indicator{flex:1;border-radius:999px;background:rgba(20,22,15,.2);transition:background .3s ease,transform .3s ease}
 .carousel-indicator.is-active{background:var(--color-primary);transform:scaleY(1.5)}
-.product-carousel-viewport{overflow:hidden;padding:1rem 0 1.4rem;touch-action:pan-y}
+.product-carousel-viewport{overflow:hidden;padding:1rem 0 1.4rem;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.product-carousel-viewport *{user-select:none;-webkit-user-select:none}
+.product-carousel-viewport.is-dragging,.product-carousel-viewport.is-dragging *{cursor:grabbing;user-select:none;-webkit-user-select:none}
+.product-carousel-viewport img{-webkit-user-drag:none;user-select:none;-webkit-user-select:none}
 .grid.product-carousel-track{display:flex;align-items:stretch;gap:1.2rem;will-change:transform;transition:transform .62s cubic-bezier(.22,.68,0,1)}
 .product-carousel-track>.card{flex:0 0 31%;min-width:0;opacity:.7;transform:scale(.86);transform-origin:center center;transition:transform .5s ease,opacity .5s ease,box-shadow .25s}
 .product-carousel-track>.card.reveal.is-visible{opacity:.7;transform:scale(.86)}
@@ -170,7 +173,7 @@ h2{font-size:clamp(2rem,5vw,2.8rem);margin-bottom:1.5rem}
 .why-item svg{width:2.4rem;height:2.4rem;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .why h3{font-size:1.1rem}
 .life{display:grid;gap:.8rem}
-.life figure{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3}
+.life figure{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease}
 .life img{width:100%;height:100%;object-fit:cover}
 .life figcaption{position:absolute;left:0;bottom:0;padding:.5rem 1rem;background:var(--color-primary-dark);font:700 1.1rem var(--font-title);text-transform:uppercase}
 
@@ -263,7 +266,8 @@ details p{margin-top:.6rem;color:var(--color-gray)}
 .why-item svg{transition:transform .3s ease}
 .why-item:hover svg{transform:translateY(-4px) scale(1.06)}
 .life img{transition:transform .7s cubic-bezier(.2,.8,.2,1)}
-.life figure:hover img{transform:scale(1.04)}
+.life figure:hover,.life figure:focus-within{transform:translateY(-5px);box-shadow:0 14px 28px rgba(0,0,0,.32)}
+.life figure:hover img,.life figure:focus-within img{transform:scale(1.07)}
 
 /* =========================================
    RESPONSIVE (Mobile First)
@@ -351,4 +355,6 @@ details p{margin-top:.6rem;color:var(--color-gray)}
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .reveal{opacity:1;transform:none}
   .cat:hover,.cat:active{transform:none}
+  .life figure:hover,.life figure:focus-within{transform:none}
+  .life figure:hover img,.life figure:focus-within img{transform:none}
 }
