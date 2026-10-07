@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tienda Táctica | Mochilas, bolsos y equipamiento táctico</title>
+<meta name="description" content="Mochilas, bolsos, riñoneras y equipamiento de estilo táctico y outdoor. Arma tu pedido y confírmalo por WhatsApp.">
+<meta name="keywords" content="mochilas tácticas, bolsos, riñoneras, canguros, equipamiento táctico, outdoor, Colombia">
+<!-- Analytics / Search Console / Meta Pixel: pegar aquí más adelante -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+
+<!-- =========================================
+     HEADER / NAVBAR
+========================================= -->
+<header class="header">
+  <div class="container nav">
+    <a href="#inicio" class="logo">GEAR<span>TÁCTICO</span></a>
+    <nav id="menu" class="menu" aria-label="Principal">
+      <a href="#inicio">Inicio</a><a href="#categorias">Categorías</a><a href="#catalogo">Catálogo</a>
+      <a href="#ofertas">Ofertas</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="searchBtn" aria-label="Buscar productos">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M16 16L21 21"></path></svg>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Abrir carrito">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="19" r="1.5"></circle><circle cx="18" cy="19" r="1.5"></circle><path d="M3 4h2l2.1 9.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.76L19 7H7"></path></svg>
+        <span id="cartCount" class="count">0</span>
+      </button>
+      <a class="nav-wa" data-wa="Hola, tengo una pregunta sobre sus productos." href="#" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">
+        <img src="assets/images/app-icon.webp" alt="" class="nav-wa-image">
+      </a>
+      <button class="icon-btn burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- =========================================
+     HERO / BANNER PRINCIPAL
+    
+========================================= -->
+<section class="hero" id="inicio" aria-label="Destacados" aria-roledescription="carrusel">
+  <div class="hero-slides" id="heroSlides" aria-live="off">
+    <article class="hero-slide is-active" data-align="left" aria-hidden="false">
+      <img src="assets/images/hero-1.jpg" alt="" fetchpriority="high">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">Gear Táctico</p>
+          <h1>Equípate para cualquier misión</h1>
+          <p>Equipamiento táctico, bolsos y accesorios diseñados para acompañarte en cualquier terreno.</p>
+          <div class="hero-btns">
+            <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
+            <a href="#" class="btn btn-wa" data-wa="Hola, quiero comprar por WhatsApp." target="_blank" rel="noopener">Comprar por WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="hero-slide" data-align="right" aria-hidden="true" inert>
+      <img src="assets/images/hero-2.jpg" alt="">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">Listo para salir</p>
+          <h2>Todo lo que necesitas, contigo</h2>
+          <p>Mochilas y accesorios funcionales para tus recorridos, viajes y aventuras al aire libre.</p>
+          <div class="hero-btns">
+            <a href="#categorias" class="btn btn-primary">Explorar categorías</a>
+            <a href="#" class="btn btn-wa" data-wa="Hola, quiero conocer sus mochilas y accesorios." target="_blank" rel="noopener">Consultar por WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="hero-slide" data-align="left" aria-hidden="true" inert>
+      <img src="assets/images/hero-3.jpg" alt="">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">Resistencia y funcionalidad</p>
+          <h2>Tu próxima aventura empieza aquí</h2>
+          <p>Encuentra el equipo que se adapta a tu ritmo y prepárate para llegar más lejos.</p>
+          <div class="hero-btns">
+            <a href="#ofertas" class="btn btn-primary">Ver ofertas</a>
+            <a href="#contacto" class="btn btn-wa">Contáctanos</a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- =========================================
+     CATEGORÍAS
+========================================= -->
+<section class="section" id="categorias">
+  <div class="container">
+    <h2>Categorías</h2>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+</section>
+
+<!-- =========================================
+     PRODUCTOS DESTACADOS
+========================================= -->
+<section class="section alt" id="destacados">
+  <div class="container">
+    <div class="featured-heading">
+      <h2>Productos destacados</h2>
+    </div>
+    <div class="product-carousel-viewport" id="featuredViewport" aria-roledescription="carrusel" aria-label="Productos destacados">
+      <div class="grid product-carousel-track" id="featuredGrid"></div>
+    </div>
+    <div class="featured-controls" aria-label="Controles de productos destacados">
+      <button class="featured-arrow" type="button" data-featured-prev aria-label="Producto destacado anterior">‹</button>
+      <button class="featured-arrow" type="button" data-featured-next aria-label="Producto destacado siguiente">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     CATÁLOGO DE PRODUCTOS
+========================================= -->
+<section class="section" id="catalogo">
+  <div class="container">
+    <h2>Catálogo</h2>
+    <div class="catalog-toolbar">
+      <button id="catalogBackBtn" class="btn btn-ghost catalog-back" type="button" hidden>← Volver al catálogo</button>
+    </div>
+    <!-- FILTROS -->
+    <div class="filters">
+      <input type="search" id="fSearch" placeholder="Buscar producto…" aria-label="Buscar producto">
+      <select id="fCat" aria-label="Categoría"></select>
+      <select id="fPrice" aria-label="Precio">
+        <option value="">Todos los precios</option><option value="0-60000">Hasta $60.000</option>
+        <option value="60000-150000">$60.000 – $150.000</option><option value="150000-999999999">Más de $150.000</option>
+      </select>
+      <select id="fSort" aria-label="Ordenar">
+        <option value="">Ordenar</option><option value="asc">Precio: menor a mayor</option>
+        <option value="desc">Precio: mayor a menor</option><option value="new">Más nuevos</option>
+      </select>
+      <label class="check"><input type="checkbox" id="fOffer"> Solo ofertas</label>
+    </div>
+    <p id="resultCount" class="muted" aria-live="polite"></p>
+    <div class="grid" id="catalogGrid"></div>
+  </div>
+</section>
+
+<!-- =========================================
+     OFERTAS
+========================================= -->
+<section class="section alt" id="ofertas">
+  <div class="container">
+    <h2>Ofertas</h2>
+    <div class="product-carousel-viewport" id="offersViewport" aria-roledescription="carrusel" aria-label="Productos en oferta">
+      <div class="grid product-carousel-track" id="offersGrid"></div>
+    </div>
+    <div class="featured-controls" aria-label="Controles de ofertas">
+      <button class="featured-arrow" type="button" data-offers-prev aria-label="Oferta anterior">‹</button>
+      <button class="featured-arrow" type="button" data-offers-next aria-label="Oferta siguiente">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     POR QUÉ ELEGIRNOS
+========================================= -->
+<section class="section">
+  <div class="container why">
+    <div class="why-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h11v7H3z"></path><path d="M14 13h5l2 4h-7"></path><path d="M7 10V6h8"></path><circle cx="7.5" cy="18.5" r="1.5"></circle><circle cx="17.5" cy="18.5" r="1.5"></circle></svg><h3>Envíos nacionales</h3></div>
+    <div class="why-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 4v5c0 4.4-2.7 7.9-7 9-4.3-1.1-7-4.6-7-9V7l7-4z"></path><path d="M9 12l2 2 4-4"></path></svg><h3>Productos resistentes</h3></div>
+    <div class="why-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v11l-4-2-4 2-4-2-4 2z"></path><path d="M8 9h8"></path><path d="M8 12h5"></path></svg><h3>Atención personalizada</h3></div>
+    <div class="why-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9z"></path><path d="M8 9h8M8 12h8M8 15h5"></path></svg><h3>Compra fácil por WhatsApp</h3></div>
+  </div>
+</section>
+
+<!-- =========================================
+     PRODUCTOS EN USO (LIFESTYLE)
+========================================= -->
+<section class="section dark">
+  <div class="container">
+    <h2>Hechos para acompañarte</h2>
+    <div class="life">
+      <figure><img loading="lazy" src="assets/images/outdoor.jpg" alt="Bolsos para montaña" onerror="this.onerror=null;this.src='assets/images/placeholder.svg'"><figcaption>Montaña</figcaption></figure>
+      <figure><img loading="lazy" src="assets/images/camping.jpg" alt="Equipamiento Militar" onerror="this.onerror=null;this.src='assets/images/placeholder.svg'"><figcaption>Militar</figcaption></figure>
+      <figure><img loading="lazy" src="assets/images/urbano.jpg" alt="Bolsos de uso urbano" onerror="this.onerror=null;this.src='assets/images/placeholder.svg'"><figcaption>Urbano</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     SOBRE NOSOTROS (texto placeholder)
+========================================= -->
+<section class="section" id="nosotros">
+  <div class="container narrow">
+    <h2>Sobre nosotros</h2>
+    <p>Somos una tienda dedicada a mochilas, bolsos, riñoneras, canguros y accesorios de estilo táctico y outdoor. </p>
+    <p>Creemos en productos funcionales y duraderos, y en atender cada pedido de forma directa y personalizada.</p>
+  </div>
+</section>
+
+<!-- =========================================
+     PREGUNTAS FRECUENTES
+========================================= -->
+<section class="section alt" id="faq">
+  <div class="container narrow">
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Hacen envíos a todo Colombia?</summary><p> Si</p></details>
+    <details><summary>¿Cuánto cuesta el envío?</summary><p> El costo depende de la ciudad y se confirma por WhatsApp.</p></details>
+    <details><summary>¿Qué medios de pago manejan?</summary><p> Los medios de pago se acuerdan al confirmar el pedido.</p></details>
+    <details><summary>¿Cómo puedo confirmar la disponibilidad?</summary><p>Al finalizar el pedido, lo enviamos por WhatsApp y confirmamos stock.</p></details>
+    <details><summary>¿Los productos tienen garantía?</summary><p> Sí, ofrecemos garantía de 30 días contra defectos de fabricación.</p></details>
+    <details><summary>¿Puedo comprar varios productos en un mismo pedido?</summary><p>Sí, agrega todos los productos al carrito y finaliza un solo pedido.</p></details>
+    <details><summary>¿Cómo realizo una compra?</summary><p>Elige productos, agrégalos al carrito, pulsa «Finalizar pedido» y confirma por WhatsApp.</p></details>
+  </div>
+</section>
+
+<!-- =========================================
+     CONTACTO
+========================================= -->
+<section class="section" id="contacto">
+  <div class="container narrow">
+    <h2>Contacto</h2>
+    <ul class="contact">
+      <li>WhatsApp: <a href="#" data-wa="Hola, tengo una pregunta sobre sus productos." target="_blank" rel="noopener">Escríbenos</a></li>
+      <li>Instagram: <a href="#">@tu_tienda</a></li>
+      <li>Facebook: <a href="#">/tu_tienda</a></li>
+      <li>Correo: <a href="mailto:correo@ejemplo.com">correo@ejemplo.com</a></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+<footer class="footer">
+  <div class="container fgrid">
+    <div><a href="#inicio" class="logo">Gear<span>Tactico</span></a><p>Equipamiento táctico.</p></div>
+    <div><h3>Enlaces</h3><a href="#catalogo">Catálogo</a><a href="#ofertas">Ofertas</a><a href="#faq">FAQ</a></div>
+    <div><h3>Categorías</h3><div id="footCats"></div></div>
+    <div><h3>Contacto</h3><a href="#" data-wa="Hola" target="_blank" rel="noopener">WhatsApp</a><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">Políticas</a></div>
+  </div>
+  <p class="copy">© 2026 Gear Táctico. Todos los derechos reservados.</p>
+</footer>
+
+<!-- =========================================
+     CARRITO (panel lateral)
+========================================= -->
+<div class="overlay" id="overlay"></div>
+<aside class="cart" id="cart" aria-label="Carrito" aria-hidden="true">
+  <div class="cart-head"><h2>Tu carrito</h2><button class="icon-btn" id="cartClose" aria-label="Cerrar carrito">✕</button></div>
+  <div id="cartItems" class="cart-items"></div>
+  <div class="cart-foot">
+    <div class="total">Total <strong id="cartTotal">$0</strong></div>
+    <button class="btn btn-wa" id="checkout">Finalizar pedido</button>
+    <button class="link" id="clearCart">Vaciar carrito</button>
+  </div>
+</aside>
+
+<!-- MODAL DE PRODUCTO -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Detalle del producto" hidden><div class="modal-box" id="modalBox"></div></div>
+
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a class="fab" data-wa="Hola, tengo una pregunta sobre sus productos." href="#" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <img class="fab-image" src="assets/images/app-icon.webp" alt="" onerror="this.hidden=true">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12.1A8.1 8.1 0 0 1 12 20c-1.5 0-3-.4-4.3-1.1L4 20l1.1-3.7A8 8 0 1 1 20 12.1z"></path><path d="M8.5 9.2h.01M12 9.2h.01M15.5 9.2h.01"></path><path d="M9 14.5c.8.8 1.8 1.5 3 1.5s2.2-.7 3-1.5"></path></svg>
+</a>
+<div class="toast" id="toast" role="status"></div>
+</body>
+</html>
