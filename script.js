@@ -3,14 +3,20 @@
 // =========================================
 const whatsappNumber = "57XXXXXXXXXX"; // ← CAMBIAR: país + número, sin + ni espacios
 const PLACEHOLDER = "assets/images/placeholder.svg";
+const colorSwatches = {
+  Negro: "#111111",
+  Verde: "#4c5b53",
+  Camuflado: "linear-gradient(135deg,#526248 0 33%,#b19b73 33% 66%,#303b30 66%)",
+  Arena: "#cbb99a"
+};
 
-// Categorías (id = valor usado en products, label = texto visible)
+// Categorías (id = valor usado en products, label = texto visible, icon = trazos SVG)
 const categories = [
-  { id: "mochilas", label: "Mochilas", image: PLACEHOLDER },
-  { id: "bolsos", label: "Bolsos", image: PLACEHOLDER },
-  { id: "tulas", label: "Tulas", image: PLACEHOLDER },
-  { id: "chalecos", label: "Chalecos", image: PLACEHOLDER },
-  { id: "accesorios", label: "Accesorios", image: PLACEHOLDER }
+  { id: "mochilas", label: "Mochilas", icon: '<path d="M16 15V11a8 8 0 0 1 16 0v4"/><rect x="12" y="15" width="24" height="27" rx="6"/><path d="M17 26h14v9a2 2 0 0 1-2 2H19a2 2 0 0 1-2-2zM8 21v16M40 21v16"/>' },
+  { id: "bolsos", label: "Bolsos", icon: '<path d="M17 18v-5a7 7 0 0 1 14 0v5"/><rect x="10" y="18" width="28" height="24" rx="4"/><path d="M10 25h28"/>' },
+  { id: "tulas", label: "Tulas", icon: '<path d="M18 15l3-6h6l3 6M15 16h18l4 7v15a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V23z"/><path d="M15 16l-5 7h28l-5-7M18 27v9M30 27v9"/>' },
+  { id: "chalecos", label: "Chalecos", icon: '<path d="M18 8l6 4 6-4 8 5-4 11v18H14V24l-4-11z"/><path d="M18 8v13l6 4 6-4V8M24 25v17M14 25h5M29 25h5"/>' },
+  { id: "accesorios", label: "Accesorios", icon: '<path d="M14 11h20v31H14z"/><path d="M19 11V7h10v4M19 17h10M19 22h10M19 27h6"/><circle cx="30" cy="34" r="5"/>' }
 ];
 
 // =========================================
@@ -67,13 +73,13 @@ function observeReveals(root = document) {
 // =========================================
 function cardHTML(p) {
   const d = discount(p);
-  const colors = p.colors && p.colors.length > 1
-    ? `<div class="colors" role="group" aria-label="Selecciona uno o más colores">${p.colors.map((c, i) => `<label><input type="checkbox" value="${esc(c)}" ${i === 0 ? "checked" : ""}><span>${esc(c)}</span></label>`).join("")}</div>` : "";
+  const colors = p.colors && p.colors.length
+    ? `<div class="colors card-colors" role="group" aria-label="Selecciona uno o más colores">${p.colors.map((c, i) => `<label title="${esc(c)}"><input type="checkbox" value="${esc(c)}" aria-label="${esc(c)}" ${i === 0 ? "checked" : ""}><span aria-hidden="true" style="--swatch-color:${Object.prototype.hasOwnProperty.call(colorSwatches, c) ? colorSwatches[c] : "#d9d9d9"}"></span></label>`).join("")}</div>` : "";
   return `<article class="card" data-id="${p.id}">
     <button class="card-img" data-action="open" aria-label="Ver detalle de ${esc(p.name)}">${imgTag(p.image, p.name)}${p.badge ? `<span class="badge ${p.badge === "OFERTA" ? "off" : ""}">${esc(p.badge)}</span>` : ""}</button>
-    <div class="card-body"><h3>${esc(p.name)}</h3><p class="desc">${esc(p.description)}</p>
-    <p class="price">${money(p.price)}${p.oldPrice ? `<s>${money(p.oldPrice)}</s><em>-${d}%</em>` : ""}</p>${colors}
-    <div class="card-btns">${p.stock ? `<button class="btn btn-dark" data-action="add">Agregar al carrito</button><button class="btn btn-wa" data-action="buy">Comprar por WhatsApp</button>` : `<span class="soldout">Agotado</span>`}</div></div></article>`;
+    <div class="card-body"><h3>${esc(p.name)}</h3>
+    <p class="price">${money(p.price)}${p.oldPrice ? `<s>${money(p.oldPrice)}</s>` : ""}</p>${p.oldPrice ? `<p class="saving">Ahorras ${money(p.oldPrice - p.price)}</p>` : ""}${colors}
+    <div class="card-btns">${p.stock ? `<button class="btn btn-dark" data-action="add">Agregar al carrito</button>` : `<span class="soldout">Agotado</span>`}</div></div></article>`;
 }
 const renderList = (el, list) => {
   el.innerHTML = list.length ? list.map(cardHTML).join("") : "<p>No encontramos productos con esos filtros.</p>";
@@ -86,7 +92,7 @@ const renderList = (el, list) => {
 let activeCategory = "";
 
 function renderCategories() {
-  $("#catGrid").innerHTML = categories.map((c) => `<a class="cat" href="#catalogo" data-cat="${c.id}">${imgTag(c.image, c.label)}<span>${esc(c.label)}</span></a>`).join("");
+  $("#catGrid").innerHTML = categories.map((c) => `<a class="cat" href="#catalogo" data-cat="${c.id}"><span class="cat-icon"><svg viewBox="0 0 48 48" aria-hidden="true">${c.icon}</svg></span><span class="cat-label">${esc(c.label)}</span></a>`).join("");
   observeReveals($("#catGrid"));
   $("#footCats").innerHTML = categories.map((c) => `<a href="#catalogo" data-cat="${c.id}">${esc(c.label)}</a>`).join("");
 }
@@ -200,26 +206,30 @@ document.addEventListener("click", (e) => {
 });
 function openModal(p) {
   const d = discount(p);
+  const galleryViews = (p.gallery || []).slice(0, 3).map((view, index) => typeof view === "string"
+    ? { src: view, label: ["Trasera", "Lado izquierdo", "Lado derecho"][index] }
+    : { src: view.src, label: view.label || ["Trasera", "Lado izquierdo", "Lado derecho"][index] });
   const views = [
     { src: p.image, label: "Frente" },
-    ...(p.gallery || []).slice(0, 3).map((view, index) => typeof view === "string"
-      ? { src: view, label: ["Trasera", "Lado izquierdo", "Lado derecho"][index] }
-      : { src: view.src, label: view.label || ["Trasera", "Lado izquierdo", "Lado derecho"][index] })
+    ...galleryViews
   ];
+  while (views.length < 4) views.push({ src: "", label: `Foto ${views.length + 1}` });
   const video = typeof p.video === "string" ? { src: p.video, label: "Video" } : p.video;
   const mediaButtons = [
-    ...views.map((view, index) => `<button class="media-thumb${index === 0 ? " is-active" : ""}" type="button" data-media-type="image" data-media-src="${esc(view.src)}" data-media-label="${esc(view.label)}" aria-label="Ver ${esc(view.label)}" aria-pressed="${index === 0}">${imgTag(view.src, `${p.name} - ${view.label}`)}</button>`),
+    ...views.map((view, index) => view.src
+      ? `<button class="media-thumb${index === 0 ? " is-active" : ""}" type="button" data-media-type="image" data-media-src="${esc(view.src)}" data-media-label="${esc(view.label)}" aria-label="Ver ${esc(view.label)}" aria-pressed="${index === 0}">${imgTag(view.src, `${p.name} - ${view.label}`)}</button>`
+      : `<button class="media-thumb media-thumb-empty" type="button" disabled aria-label="${esc(view.label)} pendiente"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path></svg></button>`),
     ...(video?.src ? [`<button class="media-thumb media-video-thumb" type="button" data-media-type="video" data-media-src="${esc(video.src)}" data-media-label="${esc(video.label || "Video")}" aria-label="Ver ${esc(video.label || "Video")}"><span aria-hidden="true">▶</span><span>${esc(video.label || "Video")}</span></button>`] : [])
   ].join("");
   $("#modalBox").innerHTML = `<button class="icon-btn close" id="mClose" aria-label="Cerrar">✕</button><div class="modal-gallery"><div class="product-media">${imgTag(p.image, `${p.name} - Frente`).replace("<img", '<img id="mMain"')}<video id="mVideo" controls playsinline preload="metadata" hidden></video></div><div class="thumbs" aria-label="Fotos y video del producto">${mediaButtons}</div></div>
   <div class="modal-info"><h2>${esc(p.name)}</h2><p class="price">${money(p.price)}${p.oldPrice ? `<s>${money(p.oldPrice)}</s><em>-${d}%</em>` : ""}</p><p>${esc(p.description)}</p>
   <ul>${(p.features || []).map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
   <p><strong>Material:</strong> ${esc(p.material || "—")}<br><strong>Dimensiones:</strong> ${esc(p.dimensions || "—")}<br><strong>Capacidad:</strong> ${esc(p.capacity || "—")}</p>
-  ${p.colors ? `<div><strong>Color${p.colors.length > 1 ? "es (puedes elegir varios)" : ""}</strong><div class="colors" id="mColors" role="group" aria-label="Selecciona uno o más colores">${p.colors.map((c, i) => `<label><input type="checkbox" value="${esc(c)}" ${i === 0 ? "checked" : ""}><span>${esc(c)}</span></label>`).join("")}</div></div>` : ""}
+  ${p.colors ? `<div class="modal-color-group"><strong>Color${p.colors.length > 1 ? "es (puedes elegir varios)" : ""}</strong><div class="colors card-colors" id="mColors" role="group" aria-label="Selecciona uno o más colores">${p.colors.map((c, i) => `<label title="${esc(c)}"><input type="checkbox" value="${esc(c)}" aria-label="${esc(c)}" ${i === 0 ? "checked" : ""}><span aria-hidden="true" style="--swatch-color:${Object.prototype.hasOwnProperty.call(colorSwatches, c) ? colorSwatches[c] : "#d9d9d9"}"></span></label>`).join("")}</div></div>` : ""}
   <p>${p.stock ? "✅ Disponible" : '<span class="soldout">Agotado</span>'}</p>
   <div class="qty" style="width:max-content"><button id="mDec" aria-label="Disminuir">−</button><span id="mQty">1</span><button id="mInc" aria-label="Aumentar">+</button></div>
-  ${p.stock ? `<button class="btn btn-dark" id="mAdd">Agregar al carrito</button><button class="btn btn-wa" id="mBuy">Comprar ahora por WhatsApp</button>` : ""}</div>`;
-  const m = $("#modal"); m.hidden = false; let qty = 1;
+  ${p.stock ? `<div class="modal-actions"><button class="btn btn-dark" id="mAdd">Agregar al carrito</button><button class="btn btn-wa" id="mBuy">Compra</button></div>` : ""}</div>`;
+  const m = $("#modal"); m.hidden = false; document.body.classList.add("modal-open"); let qty = 1;
   const col = () => selectedColors($("#modalBox"), p);
   $("#mClose").onclick = closeModal; $("#mClose").focus();
   $("#mInc").onclick = () => ($("#mQty").textContent = ++qty);
@@ -262,7 +272,10 @@ function openModal(p) {
     });
   });
 }
-const closeModal = () => ($("#modal").hidden = true);
+const closeModal = () => {
+  $("#modal").hidden = true;
+  document.body.classList.remove("modal-open");
+};
 $("#modal").addEventListener("click", (e) => { if (e.target.id === "modal") closeModal(); });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeModal(); toggleCart(false); } });
 
@@ -370,7 +383,6 @@ const initializeProductCarousel = (trackSelector, viewportSelector, indicatorsSe
     featuredTrack.style.transition = "none";
     featuredTrack.style.transform = `translateX(${dragState.startOffset}px)`;
     featuredTrack.offsetHeight;
-    featuredViewport.setPointerCapture(event.pointerId);
   });
   featuredViewport.addEventListener("dragstart", (event) => event.preventDefault());
   featuredViewport.addEventListener("pointermove", (event) => {
@@ -381,6 +393,7 @@ const initializeProductCarousel = (trackSelector, viewportSelector, indicatorsSe
       dragState.dragging = true;
       featuredViewport.classList.add("is-dragging");
       featuredTrack.style.transition = "none";
+      featuredViewport.setPointerCapture(event.pointerId);
     }
     if (!dragState.dragging) return;
     event.preventDefault();
