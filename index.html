@@ -19,10 +19,13 @@
 ========================================= -->
 <header class="header">
   <div class="container nav">
-    <a href="#inicio" class="logo">GEAR<span>TÁCTICO</span></a>
+    <a href="#inicio" class="logo" aria-label="Gear Táctico inicio">
+      <img src="assets/images/gear logo.jpeg" alt="Gear Táctico" class="logo-mark">
+      <span class="logo-text">GEAR<span>TÁCTICO</span></span>
+    </a>
     <nav id="menu" class="menu" aria-label="Principal">
       <a href="#inicio">Inicio</a><a href="#categorias">Categorías</a><a href="#catalogo">Catálogo</a>
-      <a href="#ofertas">Ofertas</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a>
+      <a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a>
     </nav>
     <div class="nav-actions">
       <button class="icon-btn" id="searchBtn" aria-label="Buscar productos">
@@ -33,7 +36,7 @@
         <span id="cartCount" class="count">0</span>
       </button>
       <a class="nav-wa" data-wa="Hola, tengo una pregunta sobre sus productos." href="#" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">
-        <img src="assets/images/app-icon.webp" alt="" class="nav-wa-image">
+        <img src="assets/images/app-icon.webp" alt="" class="nav-wa-image" loading="lazy" decoding="async" width="42" height="42">
       </a>
       <button class="icon-btn burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
@@ -85,7 +88,7 @@
           <h2>Tu próxima aventura empieza aquí</h2>
           <p>Encuentra el equipo que se adapta a tu ritmo y prepárate para llegar más lejos.</p>
           <div class="hero-btns">
-            <a href="#ofertas" class="btn btn-primary">Ver ofertas</a>
+            <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
             <a href="#contacto" class="btn btn-wa">Contáctanos</a>
           </div>
         </div>
@@ -139,22 +142,6 @@
 </section>
 
 <!-- =========================================
-     OFERTAS
-========================================= -->
-<section class="section alt" id="ofertas">
-  <div class="container">
-    <h2>Ofertas</h2>
-    <div class="product-carousel-viewport" id="offersViewport" aria-roledescription="carrusel" aria-label="Productos en oferta">
-      <div class="grid product-carousel-track" id="offersGrid"></div>
-    </div>
-    <div class="carousel-hint">
-      <span class="carousel-hint-text">Desliza para explorar</span>
-      <div class="carousel-indicators" id="offersIndicators" aria-hidden="true"></div>
-    </div>
-  </div>
-</section>
-
-<!-- =========================================
      POR QUÉ ELEGIRNOS
 ========================================= -->
 <section class="section">
@@ -173,9 +160,9 @@
   <div class="container">
     <h2>Hechos para acompañarte</h2>
     <div class="life">
-      <figure><img loading="lazy" src="assets/images/placeholder.svg" alt="Bolsos para montaña"><figcaption>Montaña</figcaption></figure>
-      <figure><img loading="lazy" src="assets/images/placeholder.svg" alt="Equipamiento Militar"><figcaption>Militar</figcaption></figure>
-      <figure><img loading="lazy" src="assets/images/placeholder.svg" alt="Bolsos de uso urbano"><figcaption>Urbano</figcaption></figure>
+      <figure><img loading="lazy" decoding="async" src="assets/images/placeholder.svg" alt="Bolsos para montaña" width="800" height="600"><figcaption>Montaña</figcaption></figure>
+      <figure><img loading="lazy" decoding="async" src="assets/images/placeholder.svg" alt="Equipamiento Militar" width="800" height="600"><figcaption>Militar</figcaption></figure>
+      <figure><img loading="lazy" decoding="async" src="assets/images/placeholder.svg" alt="Bolsos de uso urbano" width="800" height="600"><figcaption>Urbano</figcaption></figure>
     </div>
   </div>
 </section>
@@ -214,10 +201,10 @@
   <div class="container narrow">
     <h2>Contacto</h2>
     <ul class="contact">
-      <li>WhatsApp: <a href="#" data-wa="Hola, tengo una pregunta sobre sus productos." target="_blank" rel="noopener">Escríbenos</a></li>
+      <li>WhatsApp: <a href="#" data-wa="Hola, tengo una pregunta sobre sus productos." target="_blank" rel="noopener">3223741809</a></li>
       <li>Instagram: <a href="#">@tu_tienda</a></li>
-      <li>Facebook: <a href="#">/tu_tienda</a></li>
-      <li>Correo: <a href="mailto:correo@ejemplo.com">correo@ejemplo.com</a></li>
+      <li>Facebook: <a href="https://www.facebook.com/share/1FYgh8Cmqv/" target="_blank" rel="noopener">Gear Táctico</a></li>
+      <li>Correo: <a href="mailto:gear_tactico@gmail.com">gear_tactico@gmail.com</a></li>
     </ul>
   </div>
 </section>
@@ -229,9 +216,9 @@
 <footer class="footer">
   <div class="container fgrid">
     <div><a href="#inicio" class="logo">Gear<span>Tactico</span></a><p>Equipamiento táctico.</p></div>
-    <div><h3>Enlaces</h3><a href="#catalogo">Catálogo</a><a href="#ofertas">Ofertas</a><a href="#faq">FAQ</a></div>
+    <div><h3>Enlaces</h3><a href="#catalogo">Catálogo</a><a href="#faq">FAQ</a></div>
     <div><h3>Categorías</h3><div id="footCats"></div></div>
-    <div><h3>Contacto</h3><a href="#" data-wa="Hola" target="_blank" rel="noopener">WhatsApp</a><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">Políticas</a></div>
+    <div><h3>Contacto</h3><a href="#" data-wa="Hola" target="_blank" rel="noopener">WhatsApp</a><a href="#">Instagram</a><a href="https://www.facebook.com/share/1FYgh8Cmqv/" target="_blank" rel="noopener">Facebook</a><a href="#">Políticas</a></div>
   </div>
   <p class="copy">© 2026 Gear Táctico. Todos los derechos reservados.</p>
 </footer>

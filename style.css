@@ -29,7 +29,11 @@ h2{font-size:clamp(2rem,5vw,2.8rem);margin-bottom:1.5rem}
 .alt{background:var(--color-light)}
 .dark{background:var(--color-dark);color:var(--color-white)}
 .muted{color:var(--color-gray);margin-bottom:1rem}
+.empty-state{display:flex;align-items:center;justify-content:center;min-height:180px;padding:1.5rem 1rem;border:1px dashed rgba(35,38,32,.18);border-radius:18px;background:rgba(90,95,79,.03);color:var(--color-gray)}
+.empty-state p{margin:0;font-size:clamp(1.1rem,2vw,1.5rem);line-height:1.5;text-align:center}
 :focus-visible{outline:3px solid var(--color-accent);outline-offset:2px}
+.card,.cat,.why-item,.life figure{content-visibility:auto;contain-intrinsic-size:260px 360px}
+img{content-visibility:auto}
 
 /* =========================================
    BOTONES
@@ -50,8 +54,15 @@ h2{font-size:clamp(2rem,5vw,2.8rem);margin-bottom:1.5rem}
 ========================================= */
 .header{position:sticky;top:0;z-index:50;background:rgba(20,22,15,.96);backdrop-filter:blur(8px);color:var(--color-white);border-bottom:1px solid rgba(255,255,255,.08)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:1rem}
-.logo{font-family:var(--font-title);font-weight:700;font-size:1.45rem;text-decoration:none;letter-spacing:.08em}
-.logo span{color:var(--color-accent);margin-left:.3rem}
+.logo{margin-right:auto}
+@media(max-width:600px){
+  .logo-mark{width:38px;height:38px}
+  .logo-text{font-size:1.1rem;letter-spacing:.05em}
+}
+.logo{display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;letter-spacing:.08em;line-height:1}
+.logo-mark{width:46px;height:46px;object-fit:cover;border-radius:12px;display:block;flex-shrink:0;box-shadow:0 8px 16px rgba(0,0,0,.18)}
+.logo-text{font-family:var(--font-title);font-weight:700;font-size:1.45rem;color:var(--color-white);display:inline-flex;align-items:center}
+.logo-text span{color:var(--color-accent);margin-left:.3rem}
 .menu{display:none;position:absolute;top:72px;left:0;right:0;background:var(--color-dark-secondary);flex-direction:column;padding:1rem 1.25rem;gap:.25rem}
 .menu.open{display:flex;animation:menu-drop .3s cubic-bezier(.16,1,.3,1) both}
 @keyframes menu-drop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
@@ -102,18 +113,23 @@ h2{font-size:clamp(2rem,5vw,2.8rem);margin-bottom:1.5rem}
    CATÁLOGO DE CATEGORÍAS
 ========================================= */
 .category-heading{margin-bottom:1.5rem;text-align:center;text-transform:none;font-size:clamp(1.5rem,3vw,1.8rem);font-weight:700}
-.cat-grid{display:flex;flex-wrap:wrap;justify-content:space-evenly;align-items:flex-start;gap:1rem}
-.cat{flex:0 0 5.25rem;display:flex;flex-direction:column;align-items:center;gap:.45rem;color:var(--color-dark);text-decoration:none;text-align:center}
-.cat-icon{width:5rem;aspect-ratio:1;border-radius:50%;background:#f1f1f3;display:grid;place-items:center;transition:background .2s ease,transform .25s ease}
-.cat-icon svg{width:58%;height:58%;fill:none;stroke:var(--color-dark);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s ease}
-.cat-label{font-size:.75rem;font-weight:500;line-height:1.3;text-transform:none}
-.cat:hover .cat-icon,.cat:focus-visible .cat-icon{background:#e9e9eb;transform:translateY(-3px)}
-.cat:hover .cat-icon svg,.cat:focus-visible .cat-icon svg{transform:scale(1.04)}
+.cat-grid{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:1.25rem}
+.cat{flex:1 1 8rem;max-width:9rem;display:flex;flex-direction:column;align-items:center;gap:.7rem;color:var(--color-dark);text-decoration:none;text-align:center}
+.cat-icon{width:5.5rem;aspect-ratio:1;border:1px solid rgba(47,62,31,.08);border-radius:50%;background:linear-gradient(145deg,#f7f7f5,#e9e9e6);display:grid;place-items:center;box-shadow:0 5px 16px rgba(20,22,15,.07);transition:background .2s ease,transform .25s ease,box-shadow .25s ease}
+.cat-icon svg{width:60%;height:60%;fill:none;stroke:var(--color-primary-dark);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s ease}
+.cat-label{font-size:.78rem;font-weight:600;line-height:1.35;letter-spacing:.035em;text-transform:uppercase}
+.cat:hover .cat-icon,.cat:focus-visible .cat-icon{background:linear-gradient(145deg,#fff,#e5e8df);transform:translateY(-3px);box-shadow:0 9px 22px rgba(20,22,15,.13)}
+.cat:hover .cat-icon svg,.cat:focus-visible .cat-icon svg{transform:scale(1.08)}
 
 /* =========================================
    CATÁLOGO DE PRODUCTOS (tarjetas)
 ========================================= */
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
+#catalogGrid.grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:.75rem}
+#catalogGrid .card-body{padding:.72rem .7rem .75rem;gap:.25rem}
+#catalogGrid .card-body h3{font-size:.86rem;line-height:1.25}
+#catalogGrid .price{font-size:.88rem}
+#catalogGrid .card .btn{padding:.58rem .72rem;font-size:.72rem;letter-spacing:.04em;min-height:36px}
 .card{background:var(--color-white);border:1px solid #deddd0;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .35s ease,border-color .35s ease,transform .35s cubic-bezier(.2,.8,.2,1)}
 .card:hover{border-color:rgba(91,110,52,.28);box-shadow:0 14px 30px rgba(20,22,15,.14);transform:translateY(-4px)}
 .card-img{position:relative;aspect-ratio:1;background:var(--color-dark-secondary);border:0;padding:0;cursor:pointer;display:block;width:100%}
@@ -296,9 +312,9 @@ body.modal-open{overflow:hidden}
 ========================================= */
 @media(min-width:700px){
   .grid{grid-template-columns:repeat(3,1fr);gap:1.2rem}
-  .cat-grid{gap:2rem}
-  .cat{flex-basis:7rem}
-  .cat-icon{width:6.25rem}
+  .cat-grid{gap:1.5rem}
+  .cat{flex-basis:8rem}
+  .cat-icon{width:6rem}
   .cat-label{font-size:.8rem}
   .filters{grid-template-columns:minmax(0,1fr) 160px;align-items:center}
   .catalog-back{grid-column:1;justify-self:start}
@@ -313,6 +329,9 @@ body.modal-open{overflow:hidden}
   .nav-wa{display:inline-block}
   .grid{grid-template-columns:repeat(4,1fr)}
 }
+@media(max-width:960px){#catalogGrid.grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
+@media(max-width:700px){#catalogGrid.grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:480px){#catalogGrid.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:600px){
   .container{width:min(100% - 1.25rem,1180px)}
   .nav{gap:.5rem}
@@ -320,6 +339,8 @@ body.modal-open{overflow:hidden}
   .section{padding:2.75rem 0}
   h2{font-size:clamp(1.8rem,8vw,2.4rem);margin-bottom:1.1rem}
   .cat-grid{gap:1rem .75rem}
+  .cat{flex-basis:6.5rem}
+  .cat-icon{width:4.75rem}
   .featured-heading{align-items:flex-start}
   .featured-heading h2{font-size:clamp(1.7rem,7vw,2.4rem)}
   .grid.product-carousel-track{gap:.65rem}

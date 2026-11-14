@@ -1,7 +1,7 @@
 // =========================================
 // CONFIGURACIÓN GENERAL
 // =========================================
-const whatsappNumber = "57XXXXXXXXXX"; // ← CAMBIAR: país + número, sin + ni espacios
+const whatsappNumber = "573223741809";
 const PLACEHOLDER = "assets/images/placeholder.svg";
 const colorSwatches = {
   Negro: "#111111",
@@ -12,11 +12,13 @@ const colorSwatches = {
 
 // Categorías (id = valor usado en products, label = texto visible, icon = trazos SVG)
 const categories = [
-  { id: "mochilas", label: "Mochilas", icon: '<path d="M16 15V11a8 8 0 0 1 16 0v4"/><rect x="12" y="15" width="24" height="27" rx="6"/><path d="M17 26h14v9a2 2 0 0 1-2 2H19a2 2 0 0 1-2-2zM8 21v16M40 21v16"/>' },
-  { id: "bolsos", label: "Bolsos", icon: '<path d="M17 18v-5a7 7 0 0 1 14 0v5"/><rect x="10" y="18" width="28" height="24" rx="4"/><path d="M10 25h28"/>' },
-  { id: "tulas", label: "Tulas", icon: '<path d="M18 15l3-6h6l3 6M15 16h18l4 7v15a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V23z"/><path d="M15 16l-5 7h28l-5-7M18 27v9M30 27v9"/>' },
-  { id: "chalecos", label: "Chalecos", icon: '<path d="M18 8l6 4 6-4 8 5-4 11v18H14V24l-4-11z"/><path d="M18 8v13l6 4 6-4V8M24 25v17M14 25h5M29 25h5"/>' },
-  { id: "accesorios", label: "Accesorios", icon: '<path d="M14 11h20v31H14z"/><path d="M19 11V7h10v4M19 17h10M19 22h10M19 27h6"/><circle cx="30" cy="34" r="5"/>' }
+  { id: "morrales", label: "MORRALES", icon: '<path d="M19 12h10a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H19a6 6 0 0 1-6-6V18a6 6 0 0 1 6-6z"/><path d="M22 12V8h4v4M20 22h8M20 27h8"/>' },
+  { id: "tulas", label: "TULAS", icon: '<path d="M18 15l3-6h6l3 6M15 16h18l4 7v15a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V23z"/><path d="M15 16l-5 7h28l-5-7M18 27v9M30 27v9"/>' },
+  { id: "chalecos", label: "CHALECOS", icon: '<path d="M18 8l6 4 6-4 8 5-4 11v18H14V24l-4-11z"/><path d="M18 8v13l6 4 6-4V8M24 25v17M14 25h5M29 25h5"/>' },
+  { id: "pecheras", label: "PECHERAS", icon: '<path d="M17 7l7 4 7-4 8 6-3 8-2 19H14l-2-19-3-8z"/><path d="M17 7l3 11h8l3-11M24 18v22M14 25h20M16 25v10h6V25M26 25v10h6V25"/>' },
+  { id: "botas", label: "BOTAS", icon: '<path d="M15 6h13v16c0 4 2 7 6 10l8 5v4H7v-4l7-3c1-1 1-3 1-6V6z"/><path d="M19 11h7M19 15h7M19 19h7M16 25h13M8 38h34"/>' },
+  { id: "accesorios", label: "ACCESORIOS Y OTROS", icon: '<path d="M14 11h20v31H14z"/><path d="M19 11V7h10v4M19 17h10M19 22h10M19 27h6M34 38l6 6"/><circle cx="30" cy="34" r="5"/>' },
+  { id: "forros-cantimplora", label: "FORROS DE CANTIMPLORA", icon: '<path d="M18 8h12v32H18z"/><path d="M22 8V4h4v4M18 16h12M18 22h12M18 28h12"/>' }
 ];
 
 // =========================================
@@ -24,16 +26,46 @@ const categories = [
 // Campos opcionales: oldPrice, badge, colors, gallery (hasta 3 fotos extra: {src, label}), video (ruta o {src, label}), features, material, dimensions, capacity
 // =========================================
 const products = [
-  { id: 1, name: "Mochila  40L", category: "mochilas", price: 189900, oldPrice: 219900, image: PLACEHOLDER, badge: "OFERTA", description: "Mochila de alta capacidad para jornadas largas.", colors: ["Negro", "Verde", "Camuflado"], stock: true, material: "Poliéster 600D", dimensions: "50 x 30 x 25 cm", capacity: "40 L", features: ["Sistema modular", "Correas acolchadas", "Múltiples compartimentos"] },
-  { id: 2, name: "Mochila  25L", category: "mochilas", price: 149900, image: PLACEHOLDER, badge: "NUEVO", description: "Compacta y versátil para el día a día.", colors: ["Negro", "Verde"], stock: true, material: "Nailon", dimensions: "42 x 28 x 20 cm", capacity: "25 L", features: ["Compartimento para laptop", "Panel trasero ventilado"] },
-  { id: 3, name: "Porta aseo Grande", category: "bolsos", price: 129900, image: PLACEHOLDER, badge: "DESTACADO", description: "Bolso de viaje resistente con asas reforzadas.", colors: ["Negro", "Arena"], stock: true, material: "", dimensions: "60 x 28 x 28 cm", capacity: "45 L", features: ["Correa de hombro", "Cierres resistentes"] },
-  { id: 4, name: "Porta aseo pequeño", category: "bolsos", price: 79900, oldPrice: 99900, image: PLACEHOLDER, badge: "OFERTA", description: "Práctico bolso cruzado de uso diario.", colors: ["Negro", "Verde"], stock: true, material: "", dimensions: "30 x 20 x 10 cm", capacity: "6 L", features: ["Correa ajustable", "Bolsillo oculto"] },
-  { id: 5, name: "Tula", category: "tulas", price: 39900, image: PLACEHOLDER, badge: "NUEVO", description: "Ligera, con espacio para lo esencial.", colors: ["Negro", "Verde", "Camuflado"], stock: true, material: "non", dimensions: "25 x 14 x 8 cm", capacity: "3 L", features: ["Cinturón ajustable", "Dos compartimentos"] },
-  { id: 6, name: "Porta cantimplora", category: "accesorios", price: 54900, oldPrice: 64900, image: PLACEHOLDER, badge: "OFERTA", description: "Más capacidad y sistema modular.", colors: ["Negro", "Arena"], stock: true, material: "Nailon", dimensions: "28 x 16 x 9 cm", capacity: "4 L", features: ["Sistema modular", "Bolsillo frontal"] },
-  { id: 7, name: "Chaleco Portaequipo (Policia)", category: "chalecos", price: 69900, image: PLACEHOLDER, badge: "DESTACADO", description: "Chaleco modular para llevar equipo..", colors: ["Verde"], stock: true, material: "non", dimensions: "Talla ajustable", capacity: "non", features: ["Correa cruzada", "Cierre oculto"] },
-  { id: 8, name: "Chaleco Portaequipo (Militar)", category: "chalecos", price: 119900, image: PLACEHOLDER, description: "Chaleco modular para llevar equipo.", colors: ["Verde"], stock: true, material: "non", dimensions: "Talla ajustable", capacity: "non", features: ["Correa cruzada", "Cierre oculto"] },
-
-  
+  { id: 1, name: "Morral de campaña", category: "morrales", price: 149900, image: PLACEHOLDER, badge: "NUEVO", description: "Morral robusto para uso diario y recorridos extendidos.", colors: ["Negro", "Verde"], stock: true, material: "Poliéster 600D", dimensions: "45 x 28 x 18 cm", capacity: "30 L", features: ["Sistema ergonómico", "Compartimiento principal", "Malla lateral"] },
+  { id: 2, name: "Morral de campaña — norma técnica", category: "morrales", price: 169900, image: PLACEHOLDER, description: "Modelo técnico con mejor distribución y resistencia.", colors: ["Negro", "Camuflado"], stock: true, material: "Nailon 1000D", dimensions: "48 x 30 x 20 cm", capacity: "35 L", features: ["Costuras reforzadas", "Panel trasero acolchado", "Canal para botella"] },
+  { id: 3, name: "Morral de campaña — sencillo", category: "morrales", price: 129900, image: PLACEHOLDER, description: "Diseño minimalista para movilidad y confort.", colors: ["Negro", "Verde"], stock: true, material: "Poliéster", dimensions: "44 x 27 x 17 cm", capacity: "28 L", features: ["Fácil acceso", "Cintas de ajuste", "Ligero"] },
+  { id: 4, name: "Morral de campaña — mediano", category: "morrales", price: 159900, image: PLACEHOLDER, description: "Tamaño ideal para recorridos medianos.", colors: ["Negro", "Arena"], stock: true, material: "Poliéster 600D", dimensions: "50 x 32 x 22 cm", capacity: "38 L", features: ["Bolsillo externo", "Cadera acolchada", "Sistema modular"] },
+  { id: 5, name: "Morral de campaña — crucero", category: "morrales", price: 179900, image: PLACEHOLDER, badge: "DESTACADO", description: "Diseñado para desplazamientos y carga moderada.", colors: ["Negro", "Verde", "Camuflado"], stock: true, material: "Nailon 600D", dimensions: "52 x 35 x 22 cm", capacity: "40 L", features: ["Sistema de carga por torso", "Cierres reforzados", "Bolsillos laterales"] },
+  { id: 6, name: "Morral de campaña — pequeño", category: "morrales", price: 119900, image: PLACEHOLDER, description: "Compacto y funcional para salidas rápidas.", colors: ["Negro", "Verde"], stock: true, material: "Poliéster", dimensions: "38 x 24 x 16 cm", capacity: "22 L", features: ["Ligereza", "Sistema de compresión", "Porta accesorios"] },
+  { id: 7, name: "Morral de 30 L", category: "morrales", price: 139900, image: PLACEHOLDER, description: "Capacidad equilibrada para trabajo y ocio.", colors: ["Negro", "Verde", "Arena"], stock: true, material: "Poliéster 500D", dimensions: "44 x 26 x 18 cm", capacity: "30 L", features: ["Compartimento interior", "Correas ajustables", "Panel trasero ventilado"] },
+  { id: 8, name: "Morral de 40 L", category: "morrales", price: 169900, image: PLACEHOLDER, description: "Capacidad para mayor equipaje y mayor duración.", colors: ["Negro", "Verde"], stock: true, material: "Poliéster 600D", dimensions: "50 x 30 x 22 cm", capacity: "40 L", features: ["Cinturón para cadera", "Cierre reforzado", "Bolsillo para botella"] },
+  { id: 9, name: "Morral de 50 L", category: "morrales", price: 199900, image: PLACEHOLDER, badge: "NUEVO", description: "Gran capacidad para viajes y logística.", colors: ["Negro", "Camuflado"], stock: true, material: "Poliéster 600D", dimensions: "56 x 32 x 24 cm", capacity: "50 L", features: ["Compartimientos múltiples", "Sistema de transporte seguro", "Ajuste de hombros"] },
+  { id: 10, name: "Morral de aseo", category: "morrales", price: 89900, image: PLACEHOLDER, description: "Ideal para artículos y accesorios personales.", colors: ["Negro", "Verde"], stock: true, material: "Poliéster", dimensions: "32 x 20 x 14 cm", capacity: "12 L", features: ["Bolsillo interno", "Acceso rápido", "Corrección de tamaño"] },
+  { id: 11, name: "Morral de aseo — tipo Toto", category: "morrales", price: 94900, image: PLACEHOLDER, description: "Diseño práctico para aseo y accesorios.", colors: ["Negro", "Arena"], stock: true, material: "Poliéster", dimensions: "33 x 22 x 15 cm", capacity: "13 L", features: ["Asa reforzada", "Cierre de seguridad", "Compartimento auxiliar"] },
+  { id: 12, name: "Morral de aseo — acolchado", category: "morrales", price: 109900, image: PLACEHOLDER, description: "Acolchado extra para mayor protección de elementos.", colors: ["Negro", "Verde"], stock: true, material: "Poliéster acolchado", dimensions: "34 x 22 x 16 cm", capacity: "14 L", features: ["Funda acolchada", "Bolsillo externo", "Ajuste ergonómico"] },
+  { id: 13, name: "Morral de aseo mediano — abre todo", category: "morrales", price: 124900, image: PLACEHOLDER, description: "Apertura total para una organización rápida.", colors: ["Negro", "Verde", "Camuflado"], stock: true, material: "Poliéster 600D", dimensions: "38 x 25 x 18 cm", capacity: "18 L", features: ["Apertura completa", "Variedad de compartidores", "Asa de transporte"] },
+  { id: 14, name: "Tula de incorporación", category: "tulas", price: 39900, image: PLACEHOLDER, showColorSelector: true, description: "Tula ligera y práctica para uso de campo y desplazamientos diarios.", colors: ["Negro", "Verde"], stock: true, material: "Tela resistente", dimensions: "28 x 18 x 8 cm", capacity: "4 L", features: ["Uso diario", "Cinturón ajustable", "Ligera", "Color configurable"] },
+  { id: 15, name: "Tula de recuperación", category: "tulas", price: 44900, image: PLACEHOLDER, badge: "NUEVO", description: "Tula de recuperación con almacenamiento práctico.", stock: true, material: "Nailon", dimensions: "30 x 20 x 10 cm", capacity: "5 L", features: ["Gran acceso", "Bolsillo lateral", "Uso versátil"] },
+  { id: 17, name: "Chaleco arnés", category: "chalecos", price: 89900, image: PLACEHOLDER, description: "Chaleco de carga y acceso rápido.", colors: ["Negro", "Verde"], stock: true, material: "Nylon", dimensions: "Talla ajustable", capacity: "—", features: ["Arnés ergonómico", "Puntos de sujeción", "Malla ventilada"] },
+  { id: 18, name: "Chaleco tejido de plástico — tipo MOL", category: "chalecos", price: 109900, image: PLACEHOLDER, description: "Chaleco reforzado con tejido resistente para uso intensivo.", colors: ["Verde"], stock: true, material: "Plástico tejido", dimensions: "Talla ajustable", capacity: "—", features: ["Cinturón reforzado", "Bolsillos frontales", "Diseño robusto"] },
+  { id: 19, name: "Chaleco 511", category: "chalecos", price: 119900, image: PLACEHOLDER, badge: "DESTACADO", description: "Modelo de alta resistencia y amplio campo de uso.", colors: ["Negro", "Verde"], stock: true, material: "Nailon", dimensions: "Talla ajustable", capacity: "—", features: ["Mayor movilidad", "Puntos de amarre", "Sistema modular"] },
+  { id: 20, name: "Chaleco de policía", category: "chalecos", price: 139900, image: PLACEHOLDER, description: "Chaleco funcional con organización y durabilidad.", colors: ["Negro", "Verde"], stock: true, material: "Poliéster", dimensions: "Talla ajustable", capacity: "—", features: ["Paneles de carga", "Seguro durable", "Cables y bolsillos"] },
+  { id: 21, name: "Chaleco de vigilancia", category: "chalecos", price: 99900, image: PLACEHOLDER, description: "Chaleco de control y acceso con materiales resistentes.", colors: ["Verde", "Negro"], stock: true, material: "Poliéster", dimensions: "Talla ajustable", capacity: "—", features: ["Versatilidad", "Bolsillos múltiples", "Ajuste rápido"] },
+  { id: 22, name: "Pechera trenzada", category: "pecheras", price: 89900, image: PLACEHOLDER, description: "Pechera resistente con textura trenzada.", colors: ["Negro", "Verde"], stock: true, material: "Tela trenzada", dimensions: "Talla ajustable", capacity: "—", features: ["Resistencia", "Ajuste cómodo", "Uso exterior"] },
+  { id: 23, name: "Pechera de plástico", category: "pecheras", price: 84900, image: PLACEHOLDER, description: "Protección ligera para uso cotidiano y de campo.", colors: ["Negro", "Arena"], stock: true, material: "Plástico", dimensions: "Talla ajustable", capacity: "—", features: ["Impermeable", "Ligera", "Bolsillos laterales"] },
+  { id: 24, name: "Pechera con M1", category: "pecheras", price: 109900, image: PLACEHOLDER, badge: "NUEVO", description: "Modelo con sistema M1 y mejor distribución.", colors: ["Verde", "Negro"], stock: true, material: "Nailon 500D", dimensions: "Talla ajustable", capacity: "—", features: ["Sistema M1", "Protección", "Transpirabilidad"] },
+  { id: 25, name: "Pechera sencilla", category: "pecheras", price: 79900, image: PLACEHOLDER, description: "Pechera funcional y práctica para uso diario.", colors: ["Negro", "Verde"], stock: true, material: "Nylon", dimensions: "Talla ajustable", capacity: "—", features: ["Simple y sólida", "Ajuste seguro", "Uso versátil"] },
+  { id: 26, name: "Arnés", category: "accesorios", price: 74900, image: PLACEHOLDER, description: "Arnés cómodo y resistente para equipos y accesorios.", colors: ["Negro", "Verde"], stock: true, material: "Poliéster", dimensions: "Talla ajustable", capacity: "—", features: ["Ajuste reforzado", "Distribución de peso", "Resistente"] },
+  { id: 27, name: "Porta proveedores", category: "accesorios", price: 64900, image: PLACEHOLDER, description: "Accesorio para transporte de útiles y equipos.", colors: ["Negro", "Arena"], stock: true, material: "Nailon", dimensions: "30 x 20 x 10 cm", capacity: "8 L", features: ["Bolsillo seguro", "Ajuste cómodo", "Versátil"] },
+  { id: 28, name: "Porta celulares", category: "accesorios", price: 29900, image: PLACEHOLDER, description: "Soporte compacto para llevar el celular con seguridad.", colors: ["Negro", "Verde"], stock: true, material: "Poliéster", dimensions: "18 x 10 x 4 cm", capacity: "1 L", features: ["Protección", "Fácil acceso", "Ligero"] },
+  { id: 29, name: "Canguro", category: "accesorios", price: 59900, image: PLACEHOLDER, description: "Accesorio de seguridad y portabilidad para uso diario.", colors: ["Negro", "Verde"], stock: true, material: "Nailon", dimensions: "35 x 25 x 12 cm", capacity: "10 L", features: ["Ajuste cómodo", "Transporte seguro", "Uso práctico"] },
+  { id: 30, name: "Correa N.º 4 de policía — sin telas", category: "accesorios", price: 69900, image: PLACEHOLDER, description: "Correa de alta resistencia para uso profesional.", colors: ["Negro", "Verde"], stock: true, material: "Tela reforzada", dimensions: "Talla ajustable", capacity: "—", features: ["Resistencia", "Durabilidad", "Fijación sólida"] },
+  { id: 31, name: "Hamaca", category: "accesorios", price: 119900, image: PLACEHOLDER, description: "Hamaca ligera para descanso y campo.", colors: ["Verde", "Negro"], stock: true, material: "Nylon", dimensions: "220 x 120 cm", capacity: "—", features: ["Ligera", "Fácil de instalar", "Uso exterior"] },
+  { id: 32, name: "Riñonera", category: "accesorios", price: 69900, image: PLACEHOLDER, description: "Riñonera ligera con acceso rápido.", colors: ["Negro", "Verde"], stock: true, material: "Nailon", dimensions: "24 x 14 x 8 cm", capacity: "5 L", features: ["Portabilidad", "Acceso rápido", "Cómodo"] },
+  { id: 33, name: "Porta vestidos", category: "accesorios", price: 89900, image: PLACEHOLDER, description: "Porta vestidos para transporte seguro y ordenado.", colors: ["Negro", "Arena"], stock: true, material: "Poliéster", dimensions: "60 x 28 x 18 cm", capacity: "18 L", features: ["Apertura amplia", "Protección", "Fácil traslado"] },
+  { id: 34, name: "Chapuza Bianchi", category: "accesorios", price: 65900, image: PLACEHOLDER, description: "Accesorio adaptable para protección y soporte.", colors: ["Negro", "Verde"], stock: true, material: "Tela resistente", dimensions: "Talla ajustable", capacity: "—", features: ["Uso versátil", "Ajuste cómodo", "Resistente"] },
+  { id: 35, name: "Chapuza oreja de perro", category: "accesorios", price: 69900, image: PLACEHOLDER, description: "Modelo con forma funcional y diseño resistente.", colors: ["Negro", "Camuflado"], stock: true, material: "Nylon", dimensions: "Talla estándar", capacity: "—", features: ["Diseño práctico", "Ajuste seguro", "Ligero"] },
+  { id: 36, name: "Chapuza de plataforma", category: "accesorios", price: 79900, image: PLACEHOLDER, description: "Chapuza robusta con apoyo para uso práctico.", colors: ["Verde", "Negro"], stock: true, material: "Poliéster reforzado", dimensions: "Talla ajustable", capacity: "—", features: ["Ajuste funcional", "Resistente", "Uso técnico"] },
+  { id: 37, name: "Portasables", category: "accesorios", price: 54900, image: PLACEHOLDER, description: "Porta útiles para trabajo y recorridos.", colors: ["Negro", "Verde"], stock: true, material: "Nylon", dimensions: "30 x 20 x 10 cm", capacity: "7 L", features: ["Bolsillo interno", "Asa de transporte", "Ligero"] },
+  { id: 38, name: "Portakepis hombre", category: "accesorios", price: 59000, image: PLACEHOLDER, description: "Accesorio de estilo y funcionalidad para uso cotidiano.", colors: ["Negro", "Verde"], stock: true, material: "Poliéster", dimensions: "22 x 18 x 10 cm", capacity: "4 L", features: ["Fácil de llevar", "Ajuste seguro", "Práctico"] },
+  { id: 39, name: "Portakepis dama", category: "accesorios", price: 59000, image: PLACEHOLDER, description: "Modelo para mujer con diseño cómodo y práctico.", colors: ["Negro", "Arena"], stock: true, material: "Poliéster", dimensions: "22 x 18 x 10 cm", capacity: "4 L", features: ["Diseño cómodo", "Variación de color", "Portabilidad"] },
+  { id: 40, name: "Forro de cantimplora — tipo americano", category: "forros-cantimplora", price: 29900, image: PLACEHOLDER, description: "Forro para cantimplora tipo americano con ajuste seguro.", colors: ["Negro", "Verde"], stock: true, material: "Nylon", dimensions: "24 x 10 cm", capacity: "1 L", features: ["Fácil transporte", "Ajuste seguro", "Protector"] },
+  { id: 41, name: "Forro de cantimplora — sencillo", category: "forros-cantimplora", price: 24900, image: PLACEHOLDER, description: "Forro básico para cantimplora con diseño funcional.", colors: ["Negro", "Arena"], stock: true, material: "Tela resistente", dimensions: "20 x 9 cm", capacity: "1 L", features: ["Ligerísimo", "Protección básica", "Ajuste sencillo"] }
 ];
 
 // =========================================
@@ -71,10 +103,14 @@ function observeReveals(root = document) {
 // =========================================
 // RENDER DE TARJETAS
 // =========================================
+function productHasColorSelector(p) {
+  return Boolean(p.showColorSelector || p.name === "Tula de incorporación");
+}
+
 function cardHTML(p) {
   const d = discount(p);
-  const colors = p.colors && p.colors.length
-    ? `<div class="colors card-colors" role="group" aria-label="Selecciona uno o más colores">${p.colors.map((c, i) => `<label title="${esc(c)}"><input type="checkbox" value="${esc(c)}" aria-label="${esc(c)}" ${i === 0 ? "checked" : ""}><span aria-hidden="true" style="--swatch-color:${Object.prototype.hasOwnProperty.call(colorSwatches, c) ? colorSwatches[c] : "#d9d9d9"}"></span></label>`).join("")}</div>` : "";
+  const colors = productHasColorSelector(p) && p.colors && p.colors.length
+    ? `<div class="colors card-colors" role="group" aria-label="Selecciona un color">${p.colors.map((c, i) => `<label title="${esc(c)}"><input type="radio" name="color-${p.id}" value="${esc(c)}" aria-label="${esc(c)}" ${i === 0 ? "checked" : ""}><span aria-hidden="true" style="--swatch-color:${Object.prototype.hasOwnProperty.call(colorSwatches, c) ? colorSwatches[c] : "#d9d9d9"}"></span></label>`).join("")}</div>` : "";
   return `<article class="card" data-id="${p.id}">
     <button class="card-img" data-action="open" aria-label="Ver detalle de ${esc(p.name)}">${imgTag(p.image, p.name)}${p.badge ? `<span class="badge ${p.badge === "OFERTA" ? "off" : ""}">${esc(p.badge)}</span>` : ""}</button>
     <div class="card-body"><h3>${esc(p.name)}</h3>
@@ -82,7 +118,7 @@ function cardHTML(p) {
     <div class="card-btns">${p.stock ? `<button class="btn btn-dark" data-action="add">Agregar al carrito</button>` : `<span class="soldout">Agotado</span>`}</div></div></article>`;
 }
 const renderList = (el, list) => {
-  el.innerHTML = list.length ? list.map(cardHTML).join("") : "<p>No encontramos productos con esos filtros.</p>";
+  el.innerHTML = list.length ? list.map(cardHTML).join("") : '<div class="empty-state"><p>No encontramos productos con esos filtros.</p></div>';
   observeReveals(el);
 };
 
@@ -190,10 +226,10 @@ $("#checkout").addEventListener("click", () => {
 // ACCIONES DE TARJETAS Y MODAL DE PRODUCTO
 // =========================================
 const selectedColors = (root, product) => {
+  if (!productHasColorSelector(product)) return [""];
   const inputs = root.querySelectorAll(".colors input");
-  return inputs.length
-    ? Array.from(inputs).filter((input) => input.checked).map((input) => input.value)
-    : (product.colors || []).slice(0, 1);
+  if (inputs.length) return Array.from(inputs).filter((input) => input.checked).map((input) => input.value);
+  return (product.colors || []).slice(0, 1);
 };
 const orderLines = (p, colors, qty = 1) => colors.map((color) => ({ p, qty, color }));
 document.addEventListener("click", (e) => {
@@ -225,7 +261,7 @@ function openModal(p) {
   <div class="modal-info"><h2>${esc(p.name)}</h2><p class="price">${money(p.price)}${p.oldPrice ? `<s>${money(p.oldPrice)}</s><em>-${d}%</em>` : ""}</p><p>${esc(p.description)}</p>
   <ul>${(p.features || []).map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
   <p><strong>Material:</strong> ${esc(p.material || "—")}<br><strong>Dimensiones:</strong> ${esc(p.dimensions || "—")}<br><strong>Capacidad:</strong> ${esc(p.capacity || "—")}</p>
-  ${p.colors ? `<div class="modal-color-group"><strong>Color${p.colors.length > 1 ? "es (puedes elegir varios)" : ""}</strong><div class="colors card-colors" id="mColors" role="group" aria-label="Selecciona uno o más colores">${p.colors.map((c, i) => `<label title="${esc(c)}"><input type="checkbox" value="${esc(c)}" aria-label="${esc(c)}" ${i === 0 ? "checked" : ""}><span aria-hidden="true" style="--swatch-color:${Object.prototype.hasOwnProperty.call(colorSwatches, c) ? colorSwatches[c] : "#d9d9d9"}"></span></label>`).join("")}</div></div>` : ""}
+  ${productHasColorSelector(p) && p.colors ? `<div class="modal-color-group"><strong>Color</strong><div class="colors card-colors" id="mColors" role="group" aria-label="Selecciona un color">${p.colors.map((c, i) => `<label title="${esc(c)}"><input type="radio" name="modal-color-${p.id}" value="${esc(c)}" aria-label="${esc(c)}" ${i === 0 ? "checked" : ""}><span aria-hidden="true" style="--swatch-color:${Object.prototype.hasOwnProperty.call(colorSwatches, c) ? colorSwatches[c] : "#d9d9d9"}"></span></label>`).join("")}</div></div>` : ""}
   <p>${p.stock ? "✅ Disponible" : '<span class="soldout">Agotado</span>'}</p>
   <div class="qty" style="width:max-content"><button id="mDec" aria-label="Disminuir">−</button><span id="mQty">1</span><button id="mInc" aria-label="Aumentar">+</button></div>
   ${p.stock ? `<div class="modal-actions"><button class="btn btn-dark" id="mAdd">Agregar al carrito</button><button class="btn btn-wa" id="mBuy">Compra</button></div>` : ""}</div>`;
@@ -435,9 +471,7 @@ const initializeProductCarousel = (trackSelector, viewportSelector, indicatorsSe
   centerFeaturedCard(featuredPosition, false);
 };
 renderList($("#featuredGrid"), products.filter((p) => p.badge === "DESTACADO" || p.badge === "NUEVO").slice(0, 4));
-renderList($("#offersGrid"), products.filter((p) => p.oldPrice));
 initializeProductCarousel("#featuredGrid", "#featuredViewport", "#featuredIndicators");
-initializeProductCarousel("#offersGrid", "#offersViewport", "#offersIndicators");
 applyFilters();
 observeReveals();
 renderCart();
